@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.5//EN"
+        "http://struts.apache.org/dtds/struts-2.5.dtd">
+<struts>
+    <!--<constant name="struts.enable.DynamicMethodInvocation" value="true"></constant>-->
+    <!-- 默认访问页面 -->
+    <package name="default" extends="struts-default" namespace="/">
+        <default-action-ref name="IndexAction"/>
+        <action name="IndexAction" class="org.ssh.product.action.IndexAction" method="listGoods">
+            <result name="success">/homepage.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+    </package>
+
+    <!-- 商品相关请求转发 -->
+    <!-- Struts2在2.5版本后添加strict-method-invocation(严格方法访问)，默认为true，不能使用动态方法调用功能，故需设为false -->
+    <package name="product" extends="struts-default" namespace="/" strict-method-invocation="false">
+        <!-- 保存商品 -->
+        <action name="product_*" class="org.ssh.product.action.ProductAction" method="{1}Product">
+            <result>WEB-INF/view/index.jsp</result>
+            <result name="input">WEB-INF/view/index.jsp</result>
+        </action>
+    </package>
+
+    <package name="user" namespace="/" extends="struts-default" strict-method-invocation="false">
+        <action name="user_login" class="org.ssh.product.action.UserAction" method="login">
+            <result name="success">/homepage.jsp</result>
+            <result name="error">/account.jsp</result>
+        </action>
+
+        <action name="user_logout" class="org.ssh.product.action.UserAction" method="logout">
+            <result name="success">/account.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+        <action name="user_register" class="org.ssh.product.action.UserAction" method="register">
+            <result name="success">/account.jsp</result>
+            <result name="error">/register.jsp</result>
+            <result name="input">/account.jsp</result>
+        </action>
+
+        <action name="addressSet" class="org.ssh.product.action.UserAction" method="addressSet">
+            <result name="success">/account.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+    </package>
+    <package name="admin" namespace="/" extends="struts-default" strict-method-invocation="false">
+        <action name="admin_login" class="org.ssh.product.action.AdminAction" method="login">
+            <result name="success">/pages/tables.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="admin_logout" class="org.ssh.product.action.AdminAction" method="logout">
+            <result name="success">/login.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="user_op" class="org.ssh.product.action.AdminAction" method="showAlluser">
+            <result name="success">/pages/tableadmin.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="order_op" class="org.ssh.product.action.AdminAction" method="showAllOrder">
+            <result name="success">/pages/tables.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="poster_op" class="org.ssh.product.action.AdminAction" method="showPosterWall">
+            <result name="success">/pages/tablesposter.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="poster_op_tochange" class="org.ssh.product.action.AdminAction" method="tochangePage">
+            <result name="success">/pages/posterchange.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="poster_op_change" class="org.ssh.product.action.PosterAction" method="changePoster">
+            <result name="success" type="redirect">poster_op</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="user_op_userdetail" class="org.ssh.product.action.AdminAction" method="showUserByadmin">
+            <result name="success">/pages/tableadminup.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+
+        </action>
+
+        <action name="user_op_delete" class="org.ssh.product.action.AdminAction" method="deleteUserByadmin">
+            <result name="success">/pages/tableadmin.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+
+        </action>
+
+        <action name="user_op_updata" class="org.ssh.product.action.AdminAction" method="updataUserByadmin">
+            <result name="success" type="redirect">user_op</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+            <result name="redirect">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="phone_op" class="org.ssh.product.action.AdminAction" method="showAllPhone">
+            <result name="success">/pages/tablePhone.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="phone_op_to_add" class="org.ssh.product.action.AdminAction" method="toPhoneAdd">
+            <result name="success">./pages/addphone.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="phone_op_add" class="org.ssh.product.action.AdminAction" method="PhoneAddByAdmin">
+            <result name="success" type="redirect">phone_op</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="phone_op_addStore" class="org.ssh.product.action.AdminAction" method="PhoneStoreAddByAdmin">
+            <result name="success" type="redirect">phone_op</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="phone_op_addStoreNumber" class="org.ssh.product.action.AdminAction" method="PhoneStoreNumberAddByAdmin">
+            <result name="success">/pages/tablePhone.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="phone_op_toscore" class="org.ssh.product.action.AdminAction" method="toPhoneScore">
+            <result name="success">/pages/phoneScore.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="phone_op_newScore" class="org.ssh.product.action.AdminAction" method="PhoneScoreByAdmin">
+            <result name="success">/pages/phoneScore.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+        <!--<action name="user_register" class="org.ssh.product.action.UserAction" method="register">
+            <result name="success">/account.jsp</result>
+            <result name="error">/register.jsp</result>
+            <result name="input">/account.jsp</result>
+        </action>
+
+        <action name="addressSet" class="org.ssh.product.action.UserAction" method="addressSet">
+            <result name="success">/account.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>-->
+
+    </package>
+
+    <package name="goods" namespace="/" extends="struts-default" strict-method-invocation="false">
+        <action name="goods_detail" class="org.ssh.product.action.detailAction" method="detailOfGoods">
+            <result name="success">/detail.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="cart_show" class="cartAction" method="showCartlist">
+            <result name="success">/cart.jsp</result>
+            <result name="error">/account.jsp</result>
+
+        </action>
+
+        <action name="addCart" class="cartAction" method="addCartItem">
+            <result name="success">/detail.jsp</result>
+            <result name="error">/account.jsp</result>
+
+        </action>
+
+        <action name="delCart" class="cartAction" method="delCartItem">
+            <result name="success">/cart.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+
+        </action>
+        <action name="checkout" class="orderAction" method="checkoutCart">
+            <result name="success">/makeorder.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+            <result name="input">/makeorder.jsp</result>
+        </action>
+
+        <action name="search_goods" class="org.ssh.product.action.IndexAction" method="searchGoods">
+            <result name="success">/search.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+
+        <action name="moregoods" class="org.ssh.product.action.IndexAction" method="searchGoodsByBrand">
+            <result name="success">/search.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="getRanking" class="org.ssh.product.action.IndexAction" method="searchRankingList">
+            <result name="success">/ranking.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="getNewPhone" class="org.ssh.product.action.IndexAction" method="searchNewPhoneList">
+            <result name="success">/new.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="submitOrder" class="orderAction" method="submitOrder">
+            <result name="success">/order.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="showorder" class="orderAction" method="showOrder">
+            <result name="success">/order.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="payoff" class="orderAction" method="payoffOrder">
+            <result name="success" type="redirect">showorder</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="orderReceipt" class="orderAction" method="confirmOrderReceipt">
+            <result name="success" type="redirect">showorder</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="order_op_send" class="orderAction" method="orderOperation">
+            <result name="success">/pages/tables.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+        <action name="order_goods" class="orderAction" method="orderGoodsOperation">
+            <result name="success">pages/orderdetail.jsp</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+
+    </package>
+
+    <package name="review" namespace="/" extends="struts-default" strict-method-invocation="false">
+        <action name="review_submit" class="reviewAction" method="userSumbitReview">
+            <result type= "chain" name="success">goods_detail</result>
+            <result name="error">/WEB-INF/view/error.jsp</result>
+        </action>
+    </package>
+
+
+
+    <!-- 引入资源文件 -->
+    <constant name="struts.custom.i18n.resources" value="messageResource"></constant>
+
+</struts>

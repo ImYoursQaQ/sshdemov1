@@ -1,0 +1,30 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+    "-//Hibernate/Hibernate Configuration DTD//EN"
+    "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="connection.url">jdbc:mysql://localhost:3306/demo</property>
+    <property name="connection.driver_class">com.mysql.jdbc.Driver</property>
+      <mapping class="org.ssh.product.model.Product"/>
+    <mapping class="org.ssh.product.model.User"/>
+    <mapping class="org.ssh.product.model.Brand"/>
+    <mapping class="org.ssh.product.model.Goods"/>
+    <mapping class="org.ssh.product.model.Phonecolor"/>
+    <mapping class="org.ssh.product.model.Romcapacity"/>
+    <mapping class="org.ssh.product.model.Cart"/>
+      <mapping class="org.ssh.product.model.Order"/>
+      <mapping class="org.ssh.product.model.OrderGoods"/>
+      <mapping class="org.ssh.product.model.OrderGoodsEntity"/>
+      <mapping class="org.ssh.product.model.Admin"/>
+      <mapping class="org.ssh.product.model.PhonestoreEntity"/>
+      <mapping class="org.ssh.product.model.Phonestore"/>
+      <mapping class="org.ssh.product.model.TReview"/>
+      <mapping class="org.ssh.product.model.Poster"/>
+      <!-- <property name="connection.username"/> -->
+    <!-- <property name="connection.password"/> -->
+
+    <!-- DB schema will be updated if needed -->
+    <!-- <property name="hbm2ddl.auto">update</property> -->
+  </session-factory>
+</hibernate-configuration>
